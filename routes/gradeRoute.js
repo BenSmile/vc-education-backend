@@ -25,6 +25,10 @@ router.get("/allGrades", verify, async (req, res) => {
     res.status(400).json({ message: "error", err });
   }
 });
+
+
+
+
 /**** Chapitre */
 //Post Grade
 router.post("/insertChapitre", verify, (req, res) => {
