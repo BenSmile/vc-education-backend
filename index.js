@@ -5,6 +5,8 @@ const app = express();
 //Import routes
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
+const gradeRoute = require("./routes/gradeRoute");
+const courseRoute = require("./routes/courseRoute");
 
 dotenv.config();
 
@@ -17,10 +19,13 @@ mongoose.connect(
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded());
 
 // Router Middlewares
 app.use("/api/user", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/grades", gradeRoute);
+app.use("/api/courses", courseRoute);
 
 app.listen(3000, () => {
   console.log("Server Up and running...");

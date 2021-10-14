@@ -22,5 +22,14 @@ const loginValidation = (data) => {
   return schema.validate(data);
 };
 
+const gradeValidation = (data) => {
+  const schema = Joi.object({
+    title: Joi.string().required()
+  });
+
+  return schema.validate(data);
+};
+
 module.exports.loginValidation = loginValidation;
 module.exports.registrerValidation = registrerValidation;
+module.exports.gradeValidation = gradeValidation;

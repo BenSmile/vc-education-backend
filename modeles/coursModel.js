@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const coursSchema = mongoose.Schema({
-	gradeID:{type: mongoose.SchemaType.types.ObjectId, ref:'Grade'},
+	gradeID:{type: mongoose.Schema.Types.ObjectId, ref:'Grade'},
 	title:  { type: String},
 	description:  { type: String},
 	status:  { type: Boolean, default:0},
@@ -9,3 +9,5 @@ const coursSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Cours', coursSchema);
+
+

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const chapitreSchema = mongoose.Schema({
-	coursID:{type: mongoose.SchemaType.types.ObjectId, ref:'Cours'},
+	coursID:{type: mongoose.Schema.Types.ObjectId, ref:'Cours'},
 	title:  { type: String},
 	shortDescription:  { type: String},
 	description:  { type: String},
