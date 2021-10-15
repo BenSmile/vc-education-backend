@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Grade = require("../modeles/gradeModel");
 const verify = require("./verifyToken");
+const Cours = require("../modeles/coursModel");
 
 /**  Grade */
 //Post Grade
@@ -26,6 +27,16 @@ router.get("/allGrades", verify, async (req, res) => {
   }
 });
 
+//Get All courses by grade
+router.get("/:gradeId/courses", async (req, res) => {
+  try {
+    const grandeId = req.params.gradeId;
+    const data = await Cours.find({ gradeID: grandeId });
+    res.status(200).json({ message: "All courses fetched " , data});
+  } catch (err) {
+    res.status(400).json({ message: "error", err });
+  }
+});
 
 
 module.exports = router;

@@ -7,6 +7,8 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const gradeRoute = require("./routes/gradeRoute");
 const courseRoute = require("./routes/courseRoute");
+const chapterRoute = require("./routes/chapterRoute");
+const  articleRoute = require("./routes/articleRoute");
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.use("/api/user", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/grades", gradeRoute);
 app.use("/api/courses", courseRoute);
+app.use("/api/chapters", chapterRoute);
+app.use("/api/articles", articleRoute);
 
 app.listen(3000, () => {
   console.log("Server Up and running...");

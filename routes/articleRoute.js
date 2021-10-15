@@ -1,52 +1,30 @@
 const router = require("express").Router();
 const Cours = require("../modeles/coursModel");
 const Chapter = require("../modeles/chapitreModel");
+const Article = require("../modeles/articleModel");
 const verify = require("./verifyToken");
-//Post course
-router.post("/addChapter", (req, res) => {
+//Post article
+router.post("/addArticle", (req, res) => {
   console.log(req.body);
-  let chapter = new Chapter({
+  let article = new Article({
     coursID: req.body.coursID,
     title: req.body.title,
     description: req.body.description,
     shortDescription: req.body.shortDescription,
     status: req.body.status,
     image: req.body.image,
+    video: req.body.video,
   });
-  chapter = chapter
+  const data = article
     .save()
-    .then((cours) => {
-      res.status(200).json({ message: "Chapter has ben added...", chapter });
+    .then((data) => {
+      res.status(200).json({ message: "Article has been added", data });
     })
     .catch((err) => {
       res.status(400).json({ message: " Chapter fails to be added...", err });
     });
 });
 
-//Get All courses by grade
-router.get("/coursesByGrade/:gradeId", async (req, res) => {
-  try {
-    const grandeId = req.params.gradeId;
-    const allCoursesByGrade = await Cours.find({ gradeID: grandeId });
-    console.log(allCoursesByGrade);
-    // const Grades = await Grade.find({});
-    res.status(200).json({ message: "All Grades fetched " , allCoursesByGrade});
-  } catch (err) {
-    res.status(400).json({ message: "error", err });
-  }
-});
 
-//Get All courses by grade
-router.get("/:coursID/chapters", async (req, res) => {
-  try {
-    const grandeId = req.params.gradeId;
-    const allCoursesByGrade = await Cours.find({ gradeID: grandeId });
-    console.log(allCoursesByGrade);
-    // const Grades = await Grade.find({});
-    res.status(200).json({ message: "All Grades fetched " , allCoursesByGrade});
-  } catch (err) {
-    res.status(400).json({ message: "error", err });
-  }
-});
 
 module.exports = router;
