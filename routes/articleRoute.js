@@ -25,6 +25,14 @@ router.post("/addArticle", (req, res) => {
     });
 });
 
-
+router.get("/allArticles", (req, res) => {
+  const data =  Cours.find()
+    .then((data) => {
+      res.status(200).json({ message: "Article fetched", data });
+    })
+    .catch((err) => {
+      res.status(400).json({ message: "Error occured", err });
+    });
+});
 
 module.exports = router;
