@@ -1,37 +1,26 @@
 const router = require("express").Router();
 const Cours = require("../modeles/coursModel");
-const verify = require("./verifyToken");
 const Chapter = require("../modeles/chapitreModel");
-
+const verify = require("./verifyToken");
 //Post course
-router.post("/addCourse", (req, res) => {
+router.post("/addChapter", (req, res) => {
   console.log(req.body);
-  let cours = new Cours({
-    gradeID: req.body.gradeID,
+  let chapter = new Chapter({
+    coursID: req.body.coursID,
     title: req.body.title,
     description: req.body.description,
+    shortDescription: req.body.shortDescription,
     status: req.body.status,
     image: req.body.image,
   });
-  cours = cours
+  chapter = chapter
     .save()
     .then((cours) => {
-      res.status(200).json({ message: "Course has ben added...", cours });
+      res.status(200).json({ message: "Chapter has ben added...", chapter });
     })
     .catch((err) => {
-      res.status(400).json({ message: " Course fails to be added...", err });
+      res.status(400).json({ message: " Chapter fails to be added...", err });
     });
-});
-
-//Get All courses
-router.get("/allCourses", async (req, res) => {
-  try {
-    const allCourses = await Cours.find();
-    console.log(allCourses);
-    res.status(200).json({ message: "All courses fetched " , allCourses});
-  } catch (err) {
-    res.status(400).json({ message: "error", err });
-  }
 });
 
 //Get All courses by grade
@@ -41,19 +30,20 @@ router.get("/coursesByGrade/:gradeId", async (req, res) => {
     const allCoursesByGrade = await Cours.find({ gradeID: grandeId });
     console.log(allCoursesByGrade);
     // const Grades = await Grade.find({});
-    res.status(200).json({ message: "All courses fetched " , allCoursesByGrade});
+    res.status(200).json({ message: "All Grades fetched " , allCoursesByGrade});
   } catch (err) {
     res.status(400).json({ message: "error", err });
   }
 });
 
-//Get All chapters by course
+//Get All courses by grade
 router.get("/:coursID/chapters", async (req, res) => {
   try {
-    const coursID = req.params.coursID;
-    const allChaptersByCourses = await Chapter.find({ coursID: coursID });
+    const grandeId = req.params.gradeId;
+    const allCoursesByGrade = await Cours.find({ gradeID: grandeId });
+    console.log(allCoursesByGrade);
     // const Grades = await Grade.find({});
-    res.status(200).json({ message: "All Chapters fetched " , allChaptersByCourses});
+    res.status(200).json({ message: "All Grades fetched " , allCoursesByGrade});
   } catch (err) {
     res.status(400).json({ message: "error", err });
   }
