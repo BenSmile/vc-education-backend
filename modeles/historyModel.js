@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const historyView = mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  artcileId: { type: mongoose.Schema.Types.ObjectId, ref: "Article" },
+  articleId: { type: mongoose.Schema.Types.ObjectId, ref: "Article" },
   viewAt: { type: Date, default: Date.now() },
 });
 

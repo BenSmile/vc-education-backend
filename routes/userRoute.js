@@ -38,15 +38,15 @@ router.post("/addArticleToRecent", async (req, res) => {
   const articleId = req.body.articleId;
   const userId = req.body.userId;
 
-  const article = await Article.find({ _id: articleId });
+  const article = await Article.findById(articleId);
   if (!article) {
     return res.status(400).json({
       message: "Article not exists",
     });
   }
-  const user = await Article.find({ _id: userId });
+  const user = await User.findById(userId);
   if (!user) {
-   return res.status(400).json({
+    return res.status(400).json({
       message: "User not exists",
     });
   }
@@ -58,18 +58,41 @@ router.post("/addArticleToRecent", async (req, res) => {
 
   const data = await history.save();
   res.status(200).json({
-    message: "An view history has been added", data
+    message: "An view history has been added",
+    data,
   });
 });
 
 // get recently viewed articles
-router.get("/:userID/recentArticles", (req, res) => {
-  const userID = req.params.userID;
-  const data = User.find({ _id: userID })
+router.get("/:userId/recentArticles", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(400).json({
+      message: "User not exists",
+    });
+  }
+
+  // const data = await History.aggregate([
+  //   { $group: { "_id": "$artcileId" } },
+  //   { $limit: 10 },
+  // ])
+  //   .then((data) => {
+  //     res.status(200).json({
+  //       message: "User's history fetched",
+  //       data,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     res.status(400).json({ message: "Error occured", err });
+  //   });
+
+  const data = await History.find({ userId: userId })
+    .distinct("articleId")
     .then((data) => {
       res.status(200).json({
-        message: "Articles fetched",
-        data: data,
+        message: "User's history fetched",
+        data,
       });
     })
     .catch((err) => {
