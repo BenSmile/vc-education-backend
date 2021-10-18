@@ -1,9 +1,16 @@
 const router = require("express").Router();
 const Cours = require("../modeles/coursModel");
 const Chapter = require("../modeles/chapitreModel");
+const Article = require("../modeles/articleModel");
 const verify = require("./verifyToken");
+const { chapterValidation } = require("../validations");
 //Post chapter
 router.post("/addChapter", (req, res) => {
+  // let validate the data before we make A user
+  const { error } = chapterValidation(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   let chapter = new Chapter({
     coursID: req.body.coursID,
     title: req.body.title,
@@ -22,24 +29,37 @@ router.post("/addChapter", (req, res) => {
     });
 });
 
-//Get All chapter
-router.get("/allChapters", async (req, res) => {
+//Get chapter by ID
+router.get("/:chapterId", async (req, res) => {
   try {
-    const data = await Chapter.find();
-    res.status(200).json({ message: "All chapters fetched" , data});
+    const chapterId = req.params.chapterId;
+    const data = await Chapter.find({ _id: chapterId });
+    res.status(200).json({ message: "One chapter fetched", data });
   } catch (err) {
     res.status(400).json({ message: "error", err });
   }
 });
 
-//Get All Grade
-router.get("/allChapitres", verify, async (req, res) => {
+//Get All chapters
+router.get("/", async (req, res) => {
   try {
-    const Chapitre = await Chapitre.find({});
-    res.status(200).json({ message: "All Chapitres fetched ", Chapitre });
+    const data = await Chapter.find();
+    res.status(200).json({ message: "All chapters fetched", data });
   } catch (err) {
     res.status(400).json({ message: "error", err });
   }
+});
+
+//Get All articles by chapter
+router.get("/:chapterID/articles", (req, res) => {
+  const chapterID = req.params.chapterID;
+  const data = Article.find({ chapitreID: chapterID })
+    .then((data) => {
+      res.status(200).json({ message: "Article fetched", data });
+    })
+    .catch((err) => {
+      res.status(400).json({ message: "Error occured", err });
+    });
 });
 
 module.exports = router;

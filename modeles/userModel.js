@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema({
   publishAt: { type: Date, default: Date.now() },
   article: [
     {
-      articleID: { type: mongoose.Schema.Types.ObjectId, ref: "article" },
+      articleID: { type: mongoose.Schema.Types.ObjectId, ref: "Article" },
     },
   ],
 });

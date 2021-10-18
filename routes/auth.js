@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const { registrerValidation, loginValidation } = require("../validations");
 
 router.post("/register", async (req, res) => {
-  const allusers = await User.find();
   // let validate the data before we make A user
   const { error } = registrerValidation(req.body);
   if (error) {

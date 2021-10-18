@@ -1,16 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
 //Import routes
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/posts");
 const gradeRoute = require("./routes/gradeRoute");
 const courseRoute = require("./routes/courseRoute");
 const chapterRoute = require("./routes/chapterRoute");
 const  articleRoute = require("./routes/articleRoute");
-
-dotenv.config();
 
 // Connect to DB
 mongoose.connect(
@@ -25,6 +25,7 @@ app.use(express.urlencoded());
 
 // Router Middlewares
 app.use("/api/user", authRoute);
+app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/grades", gradeRoute);
 app.use("/api/courses", courseRoute);

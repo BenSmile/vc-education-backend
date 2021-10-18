@@ -26,7 +26,6 @@ const gradeValidation = (data) => {
   const schema = Joi.object({
     title: Joi.string().required()
   });
-
   return schema.validate(data);
 };
 
@@ -53,9 +52,32 @@ const chapterValidation = (data) => {
   return schema.validate(data);
 };
 
+const articleValidation = (data) => {
+  const schema = Joi.object({
+    chapitreID:Joi.string().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    shortDescription: Joi.string().required(),
+    image: Joi.string().required(),
+  });
+
+  return schema.validate(data);
+};
+
+
+const recentViewValidation = (data) => {
+  const schema = Joi.object({
+    articleId:Joi.string().required(),
+    userId: Joi.string().required()
+  });
+
+  return schema.validate(data);
+};
 
 module.exports.loginValidation = loginValidation;
 module.exports.registrerValidation = registrerValidation;
 module.exports.gradeValidation = gradeValidation;
 module.exports.courseValidation = courseValidation;
 module.exports.chapterValidation = chapterValidation;
+module.exports.articleValidation = articleValidation;
+module.exports.recentViewValidation = recentViewValidation;
