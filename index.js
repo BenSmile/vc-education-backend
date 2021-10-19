@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 const cors = require('cors');
 app.use(cors());
@@ -14,7 +15,6 @@ app.use((req, resp, next) => {
   resp.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,Authorization,auth-token');
   next();
 });
-
 
 //Import routes
 const authRoute = require("./routes/auth");
@@ -45,6 +45,6 @@ app.use("/api/courses", courseRoute);
 app.use("/api/chapters", chapterRoute);
 app.use("/api/articles", articleRoute);
 
-app.listen(3000, () => {
-  console.log("Server Up and running...");
+app.listen(PORT, () => {
+  console.log(`Server Up and running on ${PORT}...`);
 });
