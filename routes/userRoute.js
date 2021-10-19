@@ -73,22 +73,32 @@ router.get("/:userId/recentArticles", async (req, res) => {
     });
   }
 
-  // const data = await History.aggregate([
-  //   { $group: { "_id": "$artcileId" } },
-  //   { $limit: 10 },
-  // ])
-  //   .then((data) => {
-  //     res.status(200).json({
-  //       message: "User's history fetched",
-  //       data,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     res.status(400).json({ message: "Error occured", err });
-  //   });
+  const data = await History.find({ userId: userId })
+    .distinct("articleId");
+
+    
+    // .then((data) => {
+    //   res.status(200).json({
+    //     message: "User's history fetched",
+    //     data,
+    //   });
+    // })
+    // .catch((err) => {
+    //   res.status(400).json({ message: "Error occured", err });
+    // });
+});
+
+// get full history
+router.get("/:userId/fullHistory", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(400).json({
+      message: "User not exists",
+    });
+  }
 
   const data = await History.find({ userId: userId })
-    .distinct("articleId")
     .then((data) => {
       res.status(200).json({
         message: "User's history fetched",
