@@ -3,6 +3,19 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+
+const cors = require('cors');
+app.use(cors());
+
+app.use((req, resp, next) => {
+  resp.header('Access-Control-Allow-Origin', '*');
+  resp.header('Access-Control-Allow-Credentials', 'true');
+  resp.header('Access-Control-Allow-Methods', 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS');
+  resp.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,Authorization,auth-token');
+  next();
+});
+
+
 //Import routes
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/userRoute");
